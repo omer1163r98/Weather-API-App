@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { fetchWeather } from '../API'
+import { fetchWeather } from '../API' // Importing the fetchWeather function from API.js
 import Card from './Card';
+import './Mainpage.css'
+const Mainpage = () => {
+    const [weather, setWeather] = useState(null); // data state to save data
+    const [error, setError] = useState(null); // error state to handle errors
+    const [ input, setInput] = useState('');
 
-const Mainpage = ({ input, setInput }) => {
-    const [weather, setWeather] = useState(null);
-    const [error, setError] = useState(null); // Adding error state to handle errors
 
-
-    const getWeather = async () => {
+    const getWeather = async () => { //async function to fetch the weather API.
         try {
             const data = await fetchWeather(input);
             setWeather(data)
@@ -22,53 +23,28 @@ const Mainpage = ({ input, setInput }) => {
         }
     }
 
-
-
-
-
-
-
     return (
-        <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '80vh',  // Ensure the container takes up the full height
-            width: '100%',
-            margin: 0,        // Reset any default margins
-            padding: 0        // Reset any default padding
-
-        }}>
+        <div className='container'>
             <h2>Search for your favorite city!</h2>
-
             <form onSubmit={(e) => {
                 e.preventDefault()
                 getWeather()
             }}>
                 <div>
-                    <input //user input for the name of location
+                    <input className='userInput' placeholder='Enter location'//user input for the name of location
                         value={input}
-                        onChange={e => setInput(e.target.value)}
-                        style={{
-                            width: '200px',
-                            height: '35px',
-                            borderRadius: '10px',
-                            borderStyle: 'none',
-                            paddingLeft: '7px',
-                            fontSize: '13px'
-                        }}>
+                        onChange={e => setInput(e.target.value)}>
                     </input>
 
                     <button type='submit' style={{ margin: '5px' }} >Search</button>
                 </div>
             </form>
-            {error && <p style={{ position: 'relative', color: 'red', alignSelf: 'center' }}>{error}</p>}
+            {error && <p className='errorMessage'>{error}</p>}
             <div>
 
                 {weather && (
                     <div>
-                        <Card title={weather.name} temp={weather.main.temp} humidity={weather.main.humidity} description={weather.weather[0].description}error={error}></Card>
+                        <Card title={weather.name} temp={weather.main.temp} humidity={weather.main.humidity} description={weather.weather[0].description} error={error}></Card>
                     </div>
                 )}
             </div>
