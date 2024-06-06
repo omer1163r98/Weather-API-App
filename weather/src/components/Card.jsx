@@ -19,9 +19,9 @@ const Card = ({ title, temp, humidity, description, error }) => {
 
 
     return (
-
+        //check to see if the user input is valid or not, if it is not, then we display an error in the block. Otherwise we get the data and display that. 
         <div style={divStyle}>
-            {error ? ( //check to see if the user input is valid or not, if it is not, then we display an error in the block. Otherwise we get the data and display that. 
+            {error ? (
                 <p style={{ color: 'red', textAlign: 'center' }}>An error occured</p>
             ) : (
                 <>
